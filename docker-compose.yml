@@ -1,0 +1,37 @@
+services:
+
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: sta_postgres
+    environment:
+      POSTGRES_DB: sta_dev
+      POSTGRES_USER: sta_user
+      POSTGRES_PASSWORD: sta_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - sta_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sta_user -d sta_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: sta_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - sta_redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  sta_postgres_data:
+  sta_redis_data:

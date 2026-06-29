@@ -137,12 +137,29 @@ uvicorn sta.api.main:app --reload
 
 ---
 
-## What is NOT built yet (V0 scope)
+## What is DONE (V0 — Phase 0 of Implement.md)
 
-- Database schema and Alembic migrations
-- Redis connection utility
-- Market Data module implementation
-- Strategy Engine (being designed now)
+- Foundation skeleton: settings, structured JSON logging, core domain types
+  (Tick/Bar/Signal/Order/Instrument/Position), core events (TickIngested/
+  BarClosed/GapDetected), abstract `BrokerAdapter` port, FastAPI `/health`.
+- Database + Redis infrastructure: async SQLAlchemy engine/session factory,
+  async Redis client (Streams + Pub/Sub + latest-price cache helpers), both
+  wired into the API lifespan.
+- Alembic schema: `instruments`, `market_sessions`, `ticks` (TimescaleDB
+  hypertable). Continuous aggregates deferred (architecture decision A3).
+- Market Data module: the single quality gate, hot path (Pub/Sub fan-out +
+  price cache), cold path (batched hypertable writes), instrument master,
+  market calendar, gap backfiller, and the `MarketDataService` coordinator
+  tying them together for both live and replay ticks.
+- 40 tests (unit + integration), mypy --strict clean.
+
+## What is NOT built yet (V0 remaining / beyond V0)
+
+- Strategy Engine (architecture not yet designed — do not implement)
+- Signal Engine, Risk Engine, Order Manager, Execution Engine, Portfolio
+  Tracker, Audit & Notify (none designed yet)
+- Zerodha Kite Connect broker adapter implementation (only the abstract port
+  exists)
 - Any actual trading logic
 
 Do not implement trading logic until the architecture for that module has been

@@ -14,6 +14,9 @@ from decimal import Decimal
 
 from sta.core.types import Tick
 
+# MARKET: the single quality gate — CLAUDE.md rule 8. No raw broker data
+# MARKET: reaches a strategy without passing through validate() first.
+
 logger = logging.getLogger(__name__)
 
 CIRCUIT_LIMIT_PCT = Decimal("0.20")
@@ -64,16 +67,16 @@ class QualityGate:
             raise TickRejected("zero_trade_volume", tick)
 
         # IMPORTANT: staleness is wall-clock-relative and meaningless for
-        # replay/backfill ticks (rule 9) — skip it when check_staleness=False,
-        # everything else below still runs identically.
+        # IMPORTANT: replay/backfill ticks (rule 9) — skip it when check_staleness=False,
+        # IMPORTANT: everything else below still runs identically.
         if check_staleness:
             now = now or datetime.now(timezone.utc)
             if now - tick.timestamp > self.stale_after:
                 raise TickRejected("stale_tick", tick)
 
         # NOTE: watermark tracks the max *tick* timestamp seen, not wall-clock
-        # time, so dedup pruning behaves identically on every replay run
-        # regardless of when it's actually executed.
+        # NOTE: time, so dedup pruning behaves identically on every replay run
+        # NOTE: regardless of when it's actually executed.
         self._watermark = (
             tick.timestamp if self._watermark is None else max(self._watermark, tick.timestamp)
         )
@@ -94,7 +97,7 @@ class QualityGate:
 
     def _prune(self) -> None:
         # NOTE: type-narrowing assertion, not validation — validate() always
-        # sets _watermark before calling _prune(), this never actually fires.
+        # NOTE: sets _watermark before calling _prune(), this never actually fires.
         assert self._watermark is not None
         cutoff = self._watermark - self.dedup_window
         self._seen = {k for k in self._seen if k[1] >= cutoff}

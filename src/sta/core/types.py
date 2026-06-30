@@ -13,6 +13,9 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field, field_validator
 
+# CORE: shared domain types (Tick/Bar/Signal/Order/Instrument/Position) — the
+# CORE: only thing modules may import across module boundaries (CLAUDE.md rule 1).
+
 
 def _ensure_utc(value: datetime) -> datetime:
     if value.tzinfo is None:

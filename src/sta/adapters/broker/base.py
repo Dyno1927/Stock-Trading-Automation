@@ -22,13 +22,17 @@ from sta.core.types import (
     Tick,
 )
 
+# BROKER: abstract broker adapter port — concrete implementations (Zerodha
+# BROKER: Kite Connect first) live alongside this file, never imported by name
+# BROKER: elsewhere (CLAUDE.md ADR 008).
+
 
 class BrokerAdapter(ABC):
     """Abstract port for broker connectivity. All methods are async."""
 
-    # TODO: no concrete implementation exists yet — the Zerodha Kite Connect
-    # adapter is the first one planned (CLAUDE.md tech stack) but is out of
-    # scope for Phase 0 (see Implement.md).
+    # TODO PHASE_0: no concrete implementation exists yet — the Zerodha Kite
+    # TODO PHASE_0: Connect adapter is the first one planned (CLAUDE.md tech stack) but is
+    # TODO PHASE_0: out of scope for Phase 0 (see Implement.md).
 
     @abstractmethod
     async def connect(self) -> None:
@@ -39,7 +43,9 @@ class BrokerAdapter(ABC):
         """Tear down the broker session."""
 
     @abstractmethod
-    async def get_instruments(self, exchange: Exchange | None = None) -> list[Instrument]:
+    async def get_instruments(
+        self, exchange: Exchange | None = None
+    ) -> list[Instrument]:
         """Fetch the current instrument master list, optionally filtered by exchange."""
 
     @abstractmethod
@@ -47,8 +53,8 @@ class BrokerAdapter(ABC):
         """Subscribe to live ticks for the given instruments and yield them as they arrive."""
         raise NotImplementedError
         # NOTE: unreachable yield — makes this an async generator function so the
-        # AsyncIterator[Tick] return type checks out; concrete implementations
-        # replace this whole body.
+        # NOTE: AsyncIterator[Tick] return type checks out; concrete implementations
+        # NOTE: replace this whole body.
         yield  # pragma: no cover
 
     @abstractmethod

@@ -13,6 +13,9 @@ from sta.core.types import Exchange
 from sta.infrastructure.database import session_scope
 from sta.modules.market_data.models import InstrumentModel
 
+# DATABASE / MARKET / BROKER: instrument master — broker-driven upsert of
+# DATABASE / MARKET / BROKER: the symbol<->token table.
+
 logger = logging.getLogger(__name__)
 
 
@@ -34,8 +37,8 @@ async def refresh_instruments(broker: BrokerAdapter, exchange: Exchange | None =
             "tick_size": inst.tick_size,
             "lot_size": inst.lot_size,
             # NOTE: domain Instrument.expiry is a UTC datetime; the DB column
-            # is a plain Date — drop the time component here, not earlier,
-            # so the domain type stays precise.
+            # NOTE: is a plain Date — drop the time component here, not earlier,
+            # NOTE so the domain type stays precise.
             "expiry": inst.expiry.date() if inst.expiry else None,
         }
         for inst in instruments

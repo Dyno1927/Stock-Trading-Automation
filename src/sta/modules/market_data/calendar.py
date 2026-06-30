@@ -18,6 +18,8 @@ from sta.core.types import Exchange
 from sta.infrastructure.database import session_scope
 from sta.modules.market_data.models import MarketSessionModel
 
+# MARKET: trading-session calendar (hours, pre-open, holiday, state).
+
 IST = timezone(timedelta(hours=5, minutes=30))
 
 PRE_OPEN_START_IST = time(9, 0)
@@ -59,10 +61,13 @@ async def get_session_info(exchange: Exchange, session_date: date) -> SessionInf
         row = result.scalar_one_or_none()
 
     if row is not None:
-        return SessionInfo(row.is_holiday, row.pre_open_start, row.open_time, row.close_time)
+        return SessionInfo(
+            row.is_holiday, row.pre_open_start, row.open_time, row.close_time
+        )
 
-    # TODO: no NSE/BSE holiday calendar is seeded into market_sessions yet —
-    # only the weekend fallback below and explicit manual rows are honored.
+    # TODO PHASE_0: no NSE/BSE holiday calendar is seeded into
+    # TODO PHASE_0: market_sessions yet — only the weekend fallback below and explicit
+    # TODO PHASE_0: manual rows are honored.
     if session_date.weekday() >= 5:  # NOTE: Saturday=5, Sunday=6
         return SessionInfo(True, None, None, None)
 
@@ -88,7 +93,9 @@ def resolve_state(info: SessionInfo, now: datetime) -> SessionState:
     return SessionState.CLOSED
 
 
-async def current_session_state(exchange: Exchange, now: datetime | None = None) -> SessionState:
+async def current_session_state(
+    exchange: Exchange, now: datetime | None = None
+) -> SessionState:
     now = now or datetime.now(timezone.utc)
     info = await get_session_info(exchange, now.astimezone(IST).date())
     return resolve_state(info, now)

@@ -12,6 +12,8 @@ from sta.infrastructure.database import dispose_engine, init_engine
 from sta.infrastructure.logging_config import configure_logging
 from sta.infrastructure.redis_client import dispose_redis, init_redis
 
+# API: FastAPI entrypoint. TODO: only GET /health exists so far.
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:

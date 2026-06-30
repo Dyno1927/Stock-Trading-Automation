@@ -13,6 +13,8 @@ from sta.core.types import Tick
 from sta.infrastructure.database import session_scope
 from sta.modules.market_data.models import TickModel
 
+# MARKET / DATABASE: cold path — authoritative tick writes to the hypertable.
+
 logger = logging.getLogger(__name__)
 
 
@@ -39,7 +41,7 @@ async def write_ticks(ticks: Sequence[Tick]) -> None:
 
     stmt = pg_insert(TickModel).values(rows)
     # NOTE: defense in depth, not the dedup source of truth — the quality
-    # gate already rejects duplicates before ticks reach here.
+    # NOTE: gate already rejects duplicates before ticks reach here.
     stmt = stmt.on_conflict_do_nothing(index_elements=["time", "instrument_token"])
 
     async with session_scope() as session:

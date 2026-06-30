@@ -85,8 +85,7 @@ class Tick(BaseModel):
     open: Decimal | None = None
     high: Decimal | None = None
     low: Decimal | None = None
-    # NOTE: previous trading day's closing price — used for circuit-limit checks,
-    # not today's intraday close.
+    # NOTE: previous trading day's closing price — used for circuit-limit checks, not today's intra-day close.
     close: Decimal | None = None
 
     @field_validator("timestamp")

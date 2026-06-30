@@ -27,7 +27,7 @@ No trading logic exists yet — that starts at the Strategy Engine, which is
 not designed.
 
 > **Status corrected 2026-06-29.** Re-verify file contents directly before
-> trusting this section — it is hand-maintained and can drift.
+
 
 ### What is DONE
 - GitHub repo + full folder skeleton, Git/GitHub workflow, repo config

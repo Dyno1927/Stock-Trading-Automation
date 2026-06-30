@@ -33,8 +33,9 @@ Redis will serve as the primary in-memory data store.
 
 Redis will be used for:
 
-* Caching
-* Pub/Sub messaging
+* Caching (e.g. latest price per instrument, `price:{exchange}:{symbol}`)
+* The event bus — **Redis Streams** for durable paths (signals, orders, audit)
+  and **Pub/Sub** for disposable live-tick fan-out only (the hot path)
 * Temporary state
 * Session storage
 * Rate limiting

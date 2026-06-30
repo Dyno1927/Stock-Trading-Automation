@@ -250,9 +250,9 @@ The project is considered successful if it provides:
 
 Primary Languages
 
-- Python
-- Node.js
-- C#
+- Python (backend — all modules, API, WebSockets)
+- SQL (PostgreSQL + TimescaleDB)
+- TypeScript (planned, for the future dashboard — deferred)
 
 Primary Technologies
 

@@ -18,11 +18,14 @@ STA is expected to support multiple brokers.
 
 Initial target:
 
-* Groww (where technically possible)
+* Zerodha Kite Connect — the most mature retail trading API in India. Order and
+  account APIs are free; the market-data feed (₹500/month) is deferred until the
+  project generates revenue, with development running on free historical/replay
+  data through the Market Data quality gate in the meantime.
 
 Future:
 
-* Zerodha
+* Groww
 * Upstox
 * Angel One
 * Interactive Brokers
@@ -50,7 +53,7 @@ Broker Interface
 
 ↓
 
-Groww Adapter
+Zerodha Adapter (first implementation)
 
 ↓
 

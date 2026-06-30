@@ -21,42 +21,49 @@ Long-term goal: commercial SaaS product (V5).
 ## Current state
 
 **Version:** V0 — Foundations
-**Stage:** Skeleton folders + config scaffolding only. No `src/` code exists yet.
-Infrastructure not wired. No trading logic exists.
+**Stage:** Phase 0 of `Implement.md` (Milestones A–E) implemented: foundation
+skeleton, DB/Redis infrastructure, Alembic schema, and the Market Data module.
+No trading logic exists yet — that starts at the Strategy Engine, which is
+not designed.
 
-> **Status corrected 2026-06-29.** A previous version of this section claimed several
-> `src/` files were done. That was inaccurate — verified ground truth is below.
-> The Phase 0 implementation guide lives at repo-root `Implement.md`.
+> **Status corrected 2026-06-29.** Re-verify file contents directly before
+> trusting this section — it is hand-maintained and can drift.
 
-### What is DONE (actually has content)
-- GitHub repo + full folder skeleton (all dirs + **empty** `__init__.py` stubs)
-- `pyproject.toml`, `docker-compose.yml`, `.gitignore`, `.env.example`, `setup.ps1`
-- `CLAUDE.md` (this file), `CONTRIBUTING.md`, `DEVELOPMENT.md`, `CHANGELOG.md`, `RELEASES.md`, `LICENSE`
+### What is DONE
+- GitHub repo + full folder skeleton, Git/GitHub workflow, repo config
+  (labels, milestones, branch protection), `LICENSE`.
+- Foundation skeleton: `core/types.py` (Tick/Bar/Signal/Order/Instrument/
+  Position), `core/events.py` (TickIngested/BarClosed/GapDetected),
+  `config/settings.py`, `infrastructure/logging_config.py` (JSON), abstract
+  `adapters/broker/base.py`, `api/main.py` (`/health`).
+- Infrastructure: async SQLAlchemy engine/session (`infrastructure/database.py`)
+  + async Redis client with Streams/Pub-Sub/price-cache helpers
+  (`infrastructure/redis_client.py`), both wired into the API lifespan.
+- Alembic schema: `instruments`, `market_sessions`, `ticks` (TimescaleDB
+  hypertable). Continuous aggregates deferred (ADR A3).
+- Market Data module (`src/sta/modules/market_data/`): quality gate, hot
+  path, cold path, instrument master, calendar, gap backfiller, and the
+  `MarketDataService` coordinator.
+- 40 tests (unit + integration), mypy `--strict` clean.
 
-### What is NOT done yet (V0 remaining)
-All `src/sta/` Python files are **empty 0-byte stubs** — nothing is implemented. Specifically:
-- [ ] `src/sta/core/types.py` — Tick, Bar, Signal, Order domain types (EMPTY)
-- [ ] `src/sta/core/events.py` — inter-module event definitions (EMPTY)
-- [ ] `src/sta/adapters/broker/base.py` — abstract BrokerAdapter port (EMPTY)
-- [ ] `src/sta/config/settings.py` — Pydantic settings reading from `.env` (EMPTY)
-- [ ] `src/sta/infrastructure/logging_config.py` — structured JSON logging (EMPTY)
-- [ ] `src/sta/api/main.py` — FastAPI entrypoint with `/health` (EMPTY)
-- [ ] Database connection utility (`src/sta/infrastructure/database.py`) — does not exist
-- [ ] Redis connection utility (`src/sta/infrastructure/redis_client.py`) — does not exist
-- [ ] Alembic setup + initial database schema (migrations) — not initialized
-- [ ] Market Data module implementation (`src/sta/modules/market_data/`)
-- [ ] Long-form docs are EMPTY: README, PROJECT, ARCHITECTURE, DECISIONS, ROADMAP, SECURITY, `.github/workflows/ci.yml`
-- [ ] No tests written (`tests/` has only empty `__init__.py`)
-- [ ] Strategy Engine architecture design (next major milestone)
-- [ ] All other module implementations
+### What is NOT done yet
+- [ ] Long-form docs (README, PROJECT, ARCHITECTURE, DECISIONS, ROADMAP,
+      SECURITY) — still placeholders; `.github/workflows/ci.yml` not written
+- [ ] Strategy Engine architecture design (next major milestone) and
+      implementation
+- [ ] Signal Engine, Risk Engine, Order Manager, Execution Engine, Portfolio
+      Tracker, Audit & Notify — none designed yet
+- [ ] Zerodha Kite Connect broker adapter implementation (only the abstract
+      port exists)
+- [ ] Any actual trading logic
 
-### Verify the skeleton runs
-> ⚠️ Does NOT run yet — `api/main.py` and `config/settings.py` are empty. This will pass
-> only after Milestone A of `Implement.md` is complete.
+### Verify it runs
 ```powershell
 docker compose up -d
+alembic upgrade head
 uvicorn sta.api.main:app --reload
 # GET http://localhost:8000/health → {"status":"ok","env":"development"}
+pytest
 ```
 
 ---

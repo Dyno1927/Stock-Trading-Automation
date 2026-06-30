@@ -1,185 +1,305 @@
-# Git & GitHub Workflow
+# Contributing Guide
 
-The STA project follows a structured Git workflow inspired by Git Flow, optimized
-for long-term maintainability and eventual commercial SaaS development.
+# Stock Trading Automation (STA)
 
-Git history should remain clean, readable, and meaningful.
+Version: Draft
 
----
-
-## Permanent Branches
-
-### main
-
-- Production-ready code only. Always stable and deployable. Protected branch.
-- Never commit directly. Never develop directly.
-- Only merge tested release branches.
-- Every merge should represent a stable milestone.
-
-### develop
-
-- Primary development branch.
-- All feature branches originate from `develop`.
-- All completed work merges back into `develop`.
-- `develop` should remain stable enough for daily development.
+Status: Foundation Phase
 
 ---
 
-## Temporary Branches
+# Welcome
 
-Temporary branches should be deleted immediately after merging.
+Thank you for your interest in contributing to Stock Trading Automation (STA).
 
-### Feature branches — `feature/<feature-name>`
+Although the project is currently in active personal development, contributions may be welcomed in future releases.
 
-Examples: `feature/market-data-engine`, `feature/candlestick-detection`,
-`feature/technical-indicators`, `feature/strategy-engine`,
-`feature/risk-management`, `feature/backtesting`, `feature/paper-trading`,
-`feature/dashboard`, `feature/postgresql`, `feature/docker`,
-`feature/github-actions`.
-
-- One feature per branch.
-- Do not mix unrelated work.
-- Merge into `develop`.
-
-### Bug fixes — `fix/<issue>`
-
-Examples: `fix/login`, `fix/database-timeout`, `fix/order-validation`,
-`fix/websocket-reconnect`.
-
-Small, non-critical bug fixes.
-
-### Hotfixes — `hotfix/<issue>`
-
-Examples: `hotfix/security`, `hotfix/broker-api`, `hotfix/order-execution`.
-
-Critical production fixes.
-
-```
-main → hotfix → main → develop
-```
-
-### Experimental branches — `experiment/<topic>`
-
-Examples: `experiment/ai-engine`, `experiment/ml-model`,
-`experiment/new-strategy`, `experiment/high-frequency`.
-
-Research and prototypes. Must never be merged directly into `main`.
-
-### Documentation branches (optional) — `docs/<topic>`
-
-Examples: `docs/readme`, `docs/api`, `docs/security`, `docs/architecture`.
-
-### Release branches — `release/vX.Y.Z`
-
-Examples: `release/v0.1.0`, `release/v0.2.0`, `release/v1.0.0`.
-
-Final testing before merging into `main`. Only bug fixes, documentation,
-version updates, and release preparation are allowed — no new features.
+This document describes the expected workflow, engineering standards, and contribution process.
 
 ---
 
-## Branch Workflow
+# Philosophy
 
-```
-feature/*  →  develop  →  release/*  →  main
-```
+Every contribution should improve the project.
 
-Hotfixes bypass `develop` initially and merge back afterward.
+Contributors should prioritize:
+
+* Maintainability
+* Simplicity
+* Security
+* Reliability
+* Documentation
+* Testing
+
+The goal is not to write more code.
+
+The goal is to build better software.
 
 ---
 
-## Branch Protection
+# Before Contributing
 
-Protect: `main` (eventually `develop` too).
+Before making any contribution:
 
-Requirements: pull request required, no force pushes, no direct commits,
-passing tests (once CI is implemented).
+* Read the README.
+* Read PROJECT.md.
+* Read ARCHITECTURE.md.
+* Read DEVELOPMENT.md.
+* Review existing ADRs.
+* Search existing Issues and Pull Requests.
+
+Understanding the existing architecture is more important than writing code quickly.
 
 ---
 
-## Commit Convention
+# Branch Strategy
 
-[Conventional Commits](https://www.conventionalcommits.org/).
+Never commit directly to `main`.
 
-```
-feat: add candlestick detection engine
-fix: resolve websocket reconnect issue
-docs: update architecture diagram
-refactor: simplify broker abstraction
-test: add strategy engine unit tests
-perf: optimize indicator calculations
-security: validate JWT refresh flow
-build: configure docker compose
-ci: add github actions workflow
-chore: update dependencies
+Development should follow the Git workflow.
+
+Permanent branches:
+
+* main
+* develop
+
+Temporary branches:
+
+* feature/*
+* fix/*
+* hotfix/*
+* release/*
+* docs/*
+* experiment/*
+
+Examples:
+
+```text
+feature/market-data
+feature/risk-engine
+fix/order-validation
+docs/update-readme
+hotfix/security-patch
 ```
 
 ---
 
-## Pull Request Workflow
+# Development Process
 
-```
-Feature Branch → Implementation → Testing → Documentation Update
-→ Pull Request → Review → Merge into develop → Delete Feature Branch
-```
+Every feature should follow the same workflow.
 
----
-
-## GitHub Labels
-
-**Priority:** `priority: critical`, `priority: high`, `priority: medium`, `priority: low`
-
-**Type:** `feature`, `bug`, `enhancement`, `documentation`, `refactor`, `security`,
-`performance`, `research`, `testing`, `ci/cd`, `dependencies`
-
-**Area:** `frontend`, `backend`, `python-engine`, `database`, `broker`,
-`dashboard`, `strategy-engine`, `risk-engine`, `paper-trading`, `backtesting`,
-`deployment`, `docs`
-
-**Status:** `blocked`, `ready`, `in-progress`, `review`, `testing`, `completed`
+1. Create a branch.
+2. Implement the feature.
+3. Add or update tests.
+4. Update documentation.
+5. Verify code quality.
+6. Open a Pull Request.
+7. Review changes.
+8. Merge into the appropriate branch.
 
 ---
 
-## GitHub Project Workflow
+# Coding Standards
 
-```
-Ideas → Research → Architecture → Ready → In Progress → Testing → Documentation → Done
-```
+Code should be:
 
-Every feature should move through these stages before being considered complete.
+* Readable
+* Modular
+* Consistent
+* Testable
+* Maintainable
 
----
+Avoid:
 
-## GitHub Milestones
-
-Phase 0 — Foundation
-Phase 1 — Market Data Engine
-Phase 2 — Technical Analysis
-Phase 3 — Candlestick Detection
-Phase 4 — Strategy Engine
-Phase 5 — Risk Management
-Phase 6 — Backtesting
-Phase 7 — Paper Trading
-Phase 8 — Dashboard
-Phase 9 — Broker Integration
-Phase 10 — Personal Live Trading
+* Duplicate logic
+* Hardcoded values
+* Large functions
+* Unnecessary abstraction
+* Premature optimization
 
 ---
 
-## Repository Philosophy
+# Documentation
 
-- `main` represents production-quality code.
-- `develop` represents the current stable development state.
-- All work should be traceable through Issues, Pull Requests, and meaningful commits.
-- Documentation is considered part of the implementation.
-- A feature is not complete until:
-  - Implementation is finished.
-  - Tests pass.
-  - Documentation is updated.
-  - Relevant ADRs are created or updated.
-  - `CHANGELOG.md` is updated.
-  - `RELEASES.md` is updated (for milestones).
-  - `ROADMAP.md` is updated if project direction changes.
+Documentation is part of every contribution.
 
-Maintain a clean Git history by preferring small, focused commits and deleting
-merged temporary branches.
+When implementation changes, review whether the following should also be updated:
+
+* README.md
+* PROJECT.md
+* ARCHITECTURE.md
+* DEVELOPMENT.md
+* ROADMAP.md
+* CHANGELOG.md
+* RELEASES.md
+
+Documentation should never fall behind implementation.
+
+---
+
+# Testing
+
+Every significant contribution should include appropriate tests.
+
+At minimum:
+
+* Unit tests for new functionality
+* Integration tests where applicable
+
+A Pull Request is not considered complete without validating the implemented behavior.
+
+---
+
+# Security
+
+Security should be considered for every change.
+
+Review:
+
+* Input validation
+* Authentication
+* Authorization
+* Secrets management
+* Error handling
+* Logging
+
+Security issues should be reported privately whenever appropriate.
+
+---
+
+# Pull Requests
+
+A Pull Request should:
+
+* Solve a single problem.
+* Be easy to review.
+* Include related documentation.
+* Include relevant tests.
+* Follow existing architecture.
+
+Avoid combining unrelated changes into one Pull Request.
+
+---
+
+# Commit Messages
+
+STA follows Conventional Commits.
+
+Examples:
+
+```text
+feat: implement market data provider
+fix: resolve order validation issue
+docs: update architecture documentation
+refactor: simplify strategy engine
+test: add broker adapter tests
+security: improve token validation
+```
+
+Commits should be focused and descriptive.
+
+---
+
+# Code Reviews
+
+Reviews evaluate:
+
+* Correctness
+* Architecture
+* Readability
+* Maintainability
+* Testing
+* Documentation
+* Security
+* Performance
+
+Feedback should improve the project, not discourage contributors.
+
+---
+
+# Issues
+
+When opening an Issue, include:
+
+* Description
+* Expected behavior
+* Actual behavior
+* Steps to reproduce
+* Environment information
+* Relevant logs or screenshots
+
+Well-written issues are significantly easier to resolve.
+
+---
+
+# Feature Requests
+
+Feature requests should include:
+
+* Problem statement
+* Proposed solution
+* Alternatives considered
+* Expected benefits
+* Possible drawbacks
+
+Features should align with the project's long-term vision.
+
+---
+
+# Architecture
+
+Contributions should preserve the modular architecture.
+
+Do not introduce:
+
+* Tight coupling
+* Circular dependencies
+* Hidden side effects
+* Unnecessary complexity
+
+If a proposed implementation requires significant architectural changes, discuss it before implementation.
+
+---
+
+# Dependencies
+
+New dependencies should only be introduced when they provide clear long-term value.
+
+Before adding a dependency, consider:
+
+* Maintenance status
+* Community adoption
+* Security history
+* Performance impact
+* Existing alternatives
+
+Avoid unnecessary dependencies.
+
+---
+
+# Communication
+
+Engineering discussions should remain:
+
+* Respectful
+* Technical
+* Evidence-based
+* Solution-oriented
+
+Architecture decisions should prioritize objective reasoning over personal preference.
+
+---
+
+# Recognition
+
+Every contributor helps improve STA.
+
+Whether improving documentation, fixing bugs, adding tests, or implementing features, all meaningful contributions are valued.
+
+---
+
+# Guiding Principle
+
+Leave the codebase better than you found it.
+
+Every contribution should improve the project's quality, maintainability, and long-term sustainability.

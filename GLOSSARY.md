@@ -1,0 +1,404 @@
+# Glossary
+
+# Stock Trading Automation (STA)
+
+Version: Draft
+
+Status: Living Document
+
+---
+
+# Purpose
+
+This glossary provides a common vocabulary for the Stock Trading Automation (STA) project.
+
+It includes terminology related to:
+
+* Trading
+* Financial markets
+* Technical analysis
+* Software engineering
+* Databases
+* DevOps
+* Artificial Intelligence
+* System architecture
+
+Entries should remain concise and objective.
+
+---
+
+# A
+
+### Algorithmic Trading
+
+The automated execution of trading strategies using software based on predefined rules.
+
+---
+
+### API
+
+Application Programming Interface.
+
+A defined contract that allows different software systems to communicate.
+
+---
+
+### ATR (Average True Range)
+
+A technical indicator used to measure market volatility.
+
+---
+
+# B
+
+### Backtesting
+
+Testing a trading strategy against historical market data to evaluate its performance.
+
+---
+
+### Broker
+
+A financial institution or platform that executes buy and sell orders on behalf of traders.
+
+---
+
+### Bull Market
+
+A market characterized by sustained price increases.
+
+---
+
+### Bear Market
+
+A market characterized by sustained price declines.
+
+---
+
+# C
+
+### Candlestick
+
+A graphical representation of price movement during a specified time interval showing Open, High, Low, and Close (OHLC).
+
+---
+
+### Confirmation Mode
+
+An STA operating mode in which trade recommendations require explicit user approval before execution.
+
+---
+
+### CI/CD
+
+Continuous Integration and Continuous Deployment.
+
+Practices that automate building, testing, and releasing software.
+
+---
+
+### Cache
+
+Temporary storage used to improve application performance by reducing repeated computations or data retrieval.
+
+---
+
+# D
+
+### Drawdown
+
+The decline from a portfolio's peak value to its lowest subsequent value.
+
+---
+
+### Docker
+
+A platform for packaging applications and their dependencies into portable containers.
+
+---
+
+### Database Migration
+
+A controlled modification to a database schema over time.
+
+---
+
+# E
+
+### EMA (Exponential Moving Average)
+
+A moving average that gives greater weight to recent prices.
+
+---
+
+### Event-Driven Architecture
+
+An architectural style where components communicate through events instead of direct calls.
+
+---
+
+# F
+
+### FastAPI
+
+A modern Python framework used for building high-performance APIs.
+
+---
+
+### Feature Branch
+
+A temporary Git branch dedicated to implementing a specific feature.
+
+---
+
+# G
+
+### Git Flow
+
+A branching strategy using `main`, `develop`, and temporary feature, release, and hotfix branches.
+
+---
+
+# H
+
+### Hotfix
+
+An urgent correction applied to a production release.
+
+---
+
+### Historical Data
+
+Previously recorded market information used for analysis and backtesting.
+
+---
+
+# I
+
+### Indicator
+
+A mathematical calculation derived from market data to assist trading decisions.
+
+---
+
+### Infrastructure
+
+The collection of services and systems supporting the application, such as databases, caches, networking, and deployment tools.
+
+---
+
+# J
+
+### JSON
+
+JavaScript Object Notation.
+
+A widely used format for structured data exchange.
+
+---
+
+# L
+
+### Liquidity
+
+The ease with which an asset can be bought or sold without significantly affecting its price.
+
+---
+
+# M
+
+### MACD
+
+Moving Average Convergence Divergence.
+
+A momentum indicator used in technical analysis.
+
+---
+
+### Module
+
+An independent software component responsible for a specific domain or feature.
+
+---
+
+### Moving Average
+
+A statistical measure that smooths price data to identify trends.
+
+---
+
+# O
+
+### OHLC
+
+Open, High, Low, Close.
+
+The four fundamental prices representing a trading period.
+
+---
+
+### Order
+
+An instruction sent to a broker to buy or sell a financial instrument.
+
+---
+
+# P
+
+### Paper Trading
+
+Simulated trading using virtual funds under real market conditions.
+
+---
+
+### Portfolio
+
+The collection of financial assets owned by a trader.
+
+---
+
+### Pull Request (PR)
+
+A request to merge changes from one Git branch into another after review.
+
+---
+
+### PostgreSQL
+
+An open-source relational database management system.
+
+---
+
+# R
+
+### Redis
+
+An in-memory data store used for caching, messaging, and temporary data.
+
+---
+
+### Risk Management
+
+Processes designed to limit financial loss and preserve capital.
+
+---
+
+### RSI
+
+Relative Strength Index.
+
+A momentum oscillator measuring the speed and magnitude of recent price movements.
+
+---
+
+# S
+
+### SaaS
+
+Software as a Service.
+
+A cloud-based software delivery model where applications are accessed over the internet.
+
+---
+
+### Scalability
+
+The ability of a system to handle increased workload without significant degradation.
+
+---
+
+### SemVer
+
+Semantic Versioning.
+
+A versioning standard using MAJOR.MINOR.PATCH.
+
+---
+
+### Signal
+
+A recommendation generated by a trading strategy indicating a potential trading opportunity.
+
+---
+
+### Slippage
+
+The difference between the expected execution price and the actual execution price.
+
+---
+
+### Stop Loss
+
+An order designed to automatically limit losses by closing a position when a specified price is reached.
+
+---
+
+### Strategy
+
+A defined set of trading rules that determine market entry and exit decisions.
+
+---
+
+# T
+
+### Technical Analysis
+
+The study of market data and price action to forecast future price movements.
+
+---
+
+### Tick
+
+The smallest available market price update.
+
+---
+
+### Timeframe
+
+The duration represented by a single candlestick or bar, such as 1 minute, 5 minutes, or 1 day.
+
+---
+
+### TimescaleDB
+
+A PostgreSQL extension optimized for storing and querying time-series data.
+
+---
+
+# U
+
+### UTC
+
+Coordinated Universal Time.
+
+The standard time reference used internally by STA.
+
+---
+
+# V
+
+### Volatility
+
+The degree of variation in an asset's price over time.
+
+---
+
+### VWAP
+
+Volume Weighted Average Price.
+
+An indicator representing the average price of an asset weighted by trading volume.
+
+---
+
+# Future Additions
+
+This glossary will continue to expand as new technologies, indicators, brokers, architectural concepts, and financial terminology are introduced into the project.
+
+---
+
+# Guiding Principle
+
+A shared vocabulary improves communication, documentation, and engineering consistency.
+
+When introducing new terminology into STA, update this glossary so contributors always have a single source of truth.

@@ -24,7 +24,9 @@ async def test_publish_tick_fanout_and_price_cache() -> None:
 
     pubsub = get_redis().pubsub()
     await pubsub.subscribe(channel)
-    await pubsub.get_message(timeout=1)  # consume the subscribe confirmation
+    # NOTE: consume the subscribe confirmation message before publishing,
+    # otherwise it's indistinguishable from the real tick message below.
+    await pubsub.get_message(timeout=1)
 
     try:
         await hot_path.publish_tick(tick)

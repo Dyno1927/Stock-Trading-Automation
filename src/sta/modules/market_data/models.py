@@ -51,6 +51,9 @@ class TickModel(Base):
 
     __tablename__ = "ticks"
 
+    # IMPORTANT: this composite primary key is load-bearing — it's the DB-level
+    # backstop for the quality gate's "duplicate (instrument+timestamp)" rule.
+    # Changing it silently removes that guarantee.
     time: Mapped[datetime] = mapped_column(DateTime(timezone=True), primary_key=True)
     instrument_token: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     exchange: Mapped[str] = mapped_column(String(8), nullable=False)

@@ -61,7 +61,9 @@ async def get_session_info(exchange: Exchange, session_date: date) -> SessionInf
     if row is not None:
         return SessionInfo(row.is_holiday, row.pre_open_start, row.open_time, row.close_time)
 
-    if session_date.weekday() >= 5:  # Saturday=5, Sunday=6
+    # TODO: no NSE/BSE holiday calendar is seeded into market_sessions yet —
+    # only the weekend fallback below and explicit manual rows are honored.
+    if session_date.weekday() >= 5:  # NOTE: Saturday=5, Sunday=6
         return SessionInfo(True, None, None, None)
 
     return SessionInfo(

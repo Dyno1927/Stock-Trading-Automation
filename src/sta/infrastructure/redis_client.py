@@ -14,6 +14,11 @@ from redis.exceptions import ResponseError
 
 from sta.config.settings import get_settings
 
+# NOTE: redis-py's type stubs return loose Union types (bytes | str | int | ...)
+# for most commands. The `# type: ignore[...]` and `cast(...)` calls below are
+# deliberate boundary-narrowing to our actual str-keyed/str-valued usage
+# (decode_responses=True), not bugs being silenced.
+
 _client: redis.Redis | None = None
 
 

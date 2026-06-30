@@ -11,7 +11,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=False, extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", case_sensitive=False, extra="ignore"
+    )
 
     app_env: str = "development"
     log_level: str = "INFO"
@@ -19,6 +21,9 @@ class Settings(BaseSettings):
     database_url: str
     redis_url: str
 
+    # SECURITY: empty-string defaults only — never default these to a real
+    # key/secret/token. Real values must come from .env (gitignored), never
+    # from this file. See CLAUDE.md rule 4.
     kite_api_key: str = ""
     kite_api_secret: str = ""
     kite_access_token: str = ""
@@ -30,4 +35,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    # NOTE: mypy sees a missing-argument error here because database_url/
+    # redis_url have no defaults — but pydantic-settings populates them from
+    # the environment/.env at runtime, which mypy can't see statically.
     return Settings()  # type: ignore[call-arg]

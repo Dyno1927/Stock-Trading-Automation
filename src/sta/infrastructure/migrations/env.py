@@ -9,7 +9,9 @@ from alembic import context
 
 from sta.config.settings import get_settings
 from sta.infrastructure.database import Base
-from sta.modules.market_data import models  # noqa: F401  (registers ORM metadata)
+# NOTE: imported for its side effect — registers ORM metadata with Base so
+# autogenerate/target_metadata below sees the Market Data tables (ADR A2).
+from sta.modules.market_data import models  # noqa: F401
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,7 +24,8 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
-# Database URL comes from app settings (.env), never hardcoded in alembic.ini.
+# SECURITY: database URL comes from app settings (.env), never hardcoded in
+# alembic.ini — see CLAUDE.md rule 4.
 config.set_main_option("sqlalchemy.url", get_settings().database_url)
 
 

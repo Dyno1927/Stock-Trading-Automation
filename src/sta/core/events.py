@@ -51,6 +51,9 @@ class TickIngested(Event):
 class BarClosed(Event):
     """A bar finished aggregating and is ready for downstream consumers."""
 
+    # NOTE: declared for future use — no bar-aggregation logic exists yet in
+    # Phase 0 (continuous aggregates are deferred per ADR A3), so nothing
+    # currently emits this event.
     bar: Bar
 
 

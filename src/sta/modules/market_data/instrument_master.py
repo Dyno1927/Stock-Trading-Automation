@@ -33,6 +33,9 @@ async def refresh_instruments(broker: BrokerAdapter, exchange: Exchange | None =
             "instrument_type": inst.instrument_type,
             "tick_size": inst.tick_size,
             "lot_size": inst.lot_size,
+            # NOTE: domain Instrument.expiry is a UTC datetime; the DB column
+            # is a plain Date — drop the time component here, not earlier,
+            # so the domain type stays precise.
             "expiry": inst.expiry.date() if inst.expiry else None,
         }
         for inst in instruments

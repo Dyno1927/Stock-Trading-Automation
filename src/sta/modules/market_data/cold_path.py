@@ -38,6 +38,8 @@ async def write_ticks(ticks: Sequence[Tick]) -> None:
     ]
 
     stmt = pg_insert(TickModel).values(rows)
+    # NOTE: defense in depth, not the dedup source of truth — the quality
+    # gate already rejects duplicates before ticks reach here.
     stmt = stmt.on_conflict_do_nothing(index_elements=["time", "instrument_token"])
 
     async with session_scope() as session:

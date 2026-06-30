@@ -31,7 +31,9 @@ Direct communication between every module would create unnecessary dependencies.
 
 # Decision
 
-Modules communicate primarily through domain events.
+Modules communicate exclusively through domain events on the event bus. They
+never import one another directly — the only shared code is `src/sta/core/`
+(domain types and event definitions).
 
 Examples:
 

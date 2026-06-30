@@ -238,11 +238,11 @@ Objectives:
 
 Initial broker support:
 
-- Groww (where integration is technically possible)
+- Zerodha Kite Connect (first adapter; paid data feed deferred until revenue)
 
 Future broker support:
 
-- Zerodha Kite
+- Groww
 - Upstox
 - Angel One
 - Interactive Brokers

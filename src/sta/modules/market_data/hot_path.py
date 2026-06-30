@@ -9,6 +9,8 @@ import logging
 from sta.core.types import Tick
 from sta.infrastructure.redis_client import publish, set_latest_price
 
+# MARKET / CACHE: hot path — Redis Pub/Sub fan-out + latest-price cache.
+
 logger = logging.getLogger(__name__)
 
 

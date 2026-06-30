@@ -58,7 +58,8 @@ async def test_write_ticks_ignores_duplicate_primary_key() -> None:
 
     try:
         await cold_path.write_ticks([tick])
-        await cold_path.write_ticks([tick])  # same (time, instrument_token) — must not raise
+        # TEST: same (time, instrument_token) — must not raise.
+        await cold_path.write_ticks([tick])
 
         async with session_scope() as session:
             result = await session.execute(

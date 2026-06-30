@@ -30,16 +30,17 @@ Several programming languages were evaluated.
 
 # Decision
 
-Python is the primary backend language.
+Python is the primary — and only — backend language (all modules, the API, and
+WebSockets run on a single Python runtime).
 
-Supporting languages include:
+Other languages are limited to clearly separate roles:
 
-* Node.js
-* C#
+* SQL — the database layer (PostgreSQL + TimescaleDB)
+* TypeScript — planned for the future dashboard frontend; deferred until a
+  Confirmation-mode UI is needed
 
-Each language is used where it provides clear advantages.
-
-Python remains the core implementation language.
+No second backend runtime is introduced. Python remains the core implementation
+language.
 
 ---
 
@@ -66,15 +67,15 @@ Python remains the core implementation language.
 
 ## C#
 
-Strong candidate.
-
-Retained as a secondary language for desktop tooling.
+Rejected. It has no defined role in STA; network latency dominates execution
+timing (so a faster runtime buys little), and adding it would introduce a
+cross-runtime seam.
 
 ## Node.js
 
-Excellent for web development.
-
-Retained primarily for frontend tooling and supporting services.
+Not a backend language. The frontend will use TypeScript (deferred until the
+Confirmation-mode UI is needed); Node.js appears only as the tooling runtime for
+that future dashboard, never as an application language.
 
 ## C++
 

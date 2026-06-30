@@ -5,7 +5,7 @@
 ![Status](https://img.shields.io/badge/Status-Foundation-blue)
 ![Version](https://img.shields.io/badge/Version-v0.1.0--draft-orange)
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python)
-![License](https://img.shields.io/badge/License-MIT-green)
+![License](https://img.shields.io/badge/License-Proprietary-red)
 
 **A modular, event-driven stock trading automation platform designed for long-term reliability, maintainability, and intelligent market analysis.**
 
@@ -54,20 +54,16 @@ Current Phase:
 
 Completed:
 
-- Repository architecture
-- Development standards
-- Documentation foundation
-- Git workflow
-- Project structure
-- Initial engineering standards
+- Repository architecture, development standards, and documentation framework
+- Git/GitHub workflow and project structure
+- V0 Phase 0 implementation — core infrastructure, event system, database layer
+  (PostgreSQL + TimescaleDB via Alembic), Redis integration, and the Market Data
+  Engine (quality gate, hot/cold paths, instrument master, calendar, backfiller).
+  40 unit + integration tests passing; `mypy --strict` clean.
 
-Currently In Progress:
+Currently In Progress / Next:
 
-- Core infrastructure
-- Market Data Engine
-- Event system
-- Database layer
-- Redis integration
+- Strategy Engine architecture design — the first trading-logic module
 
 ---
 
@@ -197,11 +193,15 @@ Planned expansion:
 
 # Broker Support
 
-Initial target:
+First adapter:
 
-- Groww (subject to available integration methods)
+- Zerodha Kite Connect — the most mature retail trading API in India. Order and
+  account APIs are free; the live + historical market-data feed (₹500/month) is
+  deferred until the project generates revenue. Until then, development and paper
+  trading run on free historical/replay data through the same quality gate.
 
-Future planned support may include additional brokers through a broker abstraction layer.
+Additional brokers (e.g. Groww, Upstox, Angel One) plug in through the broker
+abstraction layer.
 
 ---
 
@@ -209,10 +209,9 @@ Future planned support may include additional brokers through a broker abstracti
 
 ## Primary Languages
 
-- Python
-- Node.js
-- C#
-- SQL
+- Python (backend — all modules, API, WebSockets)
+- SQL (PostgreSQL + TimescaleDB)
+- TypeScript (planned, for the future dashboard — deferred)
 
 ---
 
@@ -304,9 +303,13 @@ See **ROADMAP.md** for additional details.
 
 # License
 
-This project is licensed under the MIT License.
+This project is proprietary — Copyright (c) 2026 Dyno1927, All Rights Reserved.
+The source is publicly viewable for transparency and portfolio purposes only; no
+use, copying, modification, or distribution is permitted without prior written
+permission. STA is personal software today and is intended to become a
+commercial SaaS platform in the future.
 
-See the LICENSE file for details.
+See the LICENSE file for the full terms.
 
 ---
 

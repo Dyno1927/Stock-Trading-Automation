@@ -14,6 +14,8 @@ from pydantic import BaseModel, Field, computed_field, field_validator
 
 from sta.core.types import Bar, Exchange, Tick
 
+# EVENT: event-bus message definitions (Redis Streams/Pub-Sub payloads).
+
 
 class Event(BaseModel):
     """Base class for all events carried on the event bus."""
@@ -51,6 +53,9 @@ class TickIngested(Event):
 class BarClosed(Event):
     """A bar finished aggregating and is ready for downstream consumers."""
 
+    # PHASE_0: declared for future use — no bar-aggregation logic exists yet
+    # PHASE_0: (continuous aggregates are deferred per ADR A3), so nothing currently
+    # PHASE_0: emits this event.
     bar: Bar
 
 

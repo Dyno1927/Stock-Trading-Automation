@@ -85,17 +85,20 @@ Status: Accepted
 
 Decision
 
-Additional languages are used where appropriate.
+The backend is Python-only. TypeScript (on Node.js tooling) is planned for the
+future dashboard and is currently deferred. SQL is used for the database layer.
 
-Current languages include:
+Current languages:
 
-* Python
-* Node.js
-* C#
+* Python (backend — all modules, API, WebSockets)
+* SQL (PostgreSQL + TimescaleDB)
+* TypeScript (planned; future dashboard — deferred)
 
 Reason
 
-Each language is selected according to its strengths while preserving a consistent architecture.
+A single, consistent backend runtime keeps the system simple. C# was evaluated
+and rejected (no defined role; network latency dominates; it adds a cross-runtime
+seam).
 
 ---
 

@@ -53,7 +53,8 @@ async def test_process_tick_rejected_not_persisted() -> None:
         exchange=Exchange.NSE,
         symbol="SVCTEST2",
         timestamp=datetime.now(timezone.utc),
-        last_price=Decimal("0"),  # invalid: price <= 0
+        # TEST: invalid — price <= 0 must be rejected by the quality gate.
+        last_price=Decimal("0"),
         last_traded_quantity=1,
         volume_traded=1,
     )

@@ -14,6 +14,11 @@ from redis.exceptions import ResponseError
 
 from sta.config.settings import get_settings
 
+# NOTE: redis-py's type stubs return loose Union types (bytes | str | int | ...)
+# NOTE: for most commands. The `# type: ignore[...]` and `cast(...)` calls below are
+# NOTE: deliberate boundary-narrowing to our actual str-keyed/str-valued usage
+# NOTE: (decode_responses=True), not bugs being silenced.
+
 _client: redis.Redis | None = None
 
 
@@ -40,7 +45,7 @@ def get_redis() -> redis.Redis:
     return _client
 
 
-# --- Streams (durable: signals, orders, audit) ---------------------------
+# EVENT: Streams (durable: signals, orders, audit) -------------------------
 
 
 async def stream_add(stream: str, fields: Mapping[str, str]) -> str:
@@ -67,7 +72,7 @@ async def stream_ack(stream: str, group: str, *message_ids: str) -> int:
     return int(await get_redis().xack(stream, group, *message_ids))
 
 
-# --- Pub/Sub (disposable: hot-path ticks) ---------------------------------
+# MARKET: Pub/Sub (disposable: hot-path ticks) ------------------------------
 
 
 async def publish(channel: str, message: str) -> int:
@@ -87,7 +92,7 @@ async def subscribe(channel: str) -> AsyncIterator[str]:
         await pubsub.aclose()  # type: ignore[no-untyped-call]
 
 
-# --- Latest-price cache ---------------------------------------------------
+# CACHE: latest-price cache -------------------------------------------------
 
 
 def price_cache_key(exchange: str, symbol: str) -> str:

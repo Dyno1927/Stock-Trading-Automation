@@ -13,6 +13,10 @@ from sta.core.types import Tick
 from sta.modules.market_data import cold_path, hot_path
 from sta.modules.market_data.quality_gate import QualityGate, TickRejected
 
+# MARKET / SERVICE / MODULE: the Market Data module's single coordinator —
+# MARKET / SERVICE / MODULE: the only thing outside this package that should be called to ingest a
+# MARKET / SERVICE / MODULE: tick, live or replayed.
+
 logger = logging.getLogger(__name__)
 
 

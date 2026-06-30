@@ -57,6 +57,8 @@ def upgrade() -> None:
         sa.Column("last_traded_quantity", sa.BigInteger(), nullable=False, server_default="0"),
         sa.Column("volume_traded", sa.BigInteger(), nullable=False, server_default="0"),
     )
+    # ADR: A3 — continuous aggregates (bars_1m/5m) deferred to a follow-up
+    # migration; they can't run inside a transaction.
     op.execute("SELECT create_hypertable('ticks', 'time');")
 
 

@@ -28,7 +28,7 @@ def test_tick_rejects_naive_timestamp() -> None:
             instrument_token=1,
             exchange=Exchange.NSE,
             symbol="X",
-            timestamp=datetime.now(),  # naive
+            timestamp=datetime.now(),  # TEST: naive datetime — must be rejected
             last_price=Decimal("10"),
         )
 

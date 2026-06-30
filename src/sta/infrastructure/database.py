@@ -15,6 +15,8 @@ from sqlalchemy.orm import DeclarativeBase
 
 from sta.config.settings import get_settings
 
+# DATABASE: async SQLAlchemy engine/session factory + declarative base.
+
 
 class Base(DeclarativeBase):
     pass

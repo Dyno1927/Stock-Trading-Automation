@@ -15,6 +15,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from sta.infrastructure.database import Base
 
+# MARKET / DATABASE: ORM models for the Market Data module's tables.
+# MODULE: lives here (not infrastructure/) on purpose — Alembic importing
+# MODULE: this is tooling, not a module-isolation violation (see docstring above).
+
 
 class InstrumentModel(Base):
     """Symbol<->token master record (per-exchange)."""
@@ -51,10 +55,16 @@ class TickModel(Base):
 
     __tablename__ = "ticks"
 
+    # IMPORTANT: this composite primary key is load-bearing — it's the DB-level
+    # IMPORTANT: backstop for the quality gate's "duplicate (instrument+timestamp)" rule.
+    # IMPORTANT: Changing it silently removes that guarantee.
+
     time: Mapped[datetime] = mapped_column(DateTime(timezone=True), primary_key=True)
     instrument_token: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     exchange: Mapped[str] = mapped_column(String(8), nullable=False)
     symbol: Mapped[str] = mapped_column(String(64), nullable=False)
     last_price: Mapped[Decimal] = mapped_column(Numeric(12, 4), nullable=False)
-    last_traded_quantity: Mapped[int] = mapped_column(BigInteger, nullable=False, default=0)
+    last_traded_quantity: Mapped[int] = mapped_column(
+        BigInteger, nullable=False, default=0
+    )
     volume_traded: Mapped[int] = mapped_column(BigInteger, nullable=False, default=0)

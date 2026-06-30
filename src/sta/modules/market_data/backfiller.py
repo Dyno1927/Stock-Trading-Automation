@@ -20,6 +20,8 @@ from sta.infrastructure.database import session_scope
 from sta.modules.market_data.models import TickModel
 from sta.modules.market_data.service import MarketDataService
 
+# MARKET / BROKER: gap detection + backfill on reconnect.
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_BACKFILL_PERIOD = BarPeriod.ONE_MINUTE
@@ -45,6 +47,7 @@ def _bar_to_tick(bar: Bar) -> Tick:
         open=bar.open,
         high=bar.high,
         low=bar.low,
+        # IMPORTANT: `close` intentionally omitted — see docstring above.
     )
 
 
@@ -105,6 +108,8 @@ async def backfill_on_reconnect(
     accepted = 0
     for bar in sorted(bars, key=lambda b: b.close_time):
         tick = _bar_to_tick(bar)
+        # NOTE: check_staleness=False — backfilled ticks are old by
+        # NOTE: definition; every other quality-gate rule still applies (rule 9).
         result = await service.process_tick(tick, check_staleness=False)
         if result is not None:
             accepted += 1

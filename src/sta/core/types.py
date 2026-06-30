@@ -13,6 +13,9 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field, field_validator
 
+# CORE: shared domain types (Tick/Bar/Signal/Order/Instrument/Position) — the
+# CORE: only thing modules may import across module boundaries (CLAUDE.md rule 1).
+
 
 def _ensure_utc(value: datetime) -> datetime:
     if value.tzinfo is None:
@@ -85,8 +88,8 @@ class Tick(BaseModel):
     open: Decimal | None = None
     high: Decimal | None = None
     low: Decimal | None = None
+    # NOTE: previous trading day's closing price — used for circuit-limit checks, not today's intra-day close.
     close: Decimal | None = None
-    """Previous trading day's closing price — used for circuit-limit checks."""
 
     @field_validator("timestamp")
     @classmethod

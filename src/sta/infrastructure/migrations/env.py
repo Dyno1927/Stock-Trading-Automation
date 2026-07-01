@@ -13,6 +13,9 @@ from sta.infrastructure.database import Base
 # autogenerate/target_metadata below sees the Market Data tables (ADR A2).
 from sta.modules.market_data import models  # noqa: F401
 
+# MIGRATION: Alembic async env.py — reads DB URL from app settings (.env)
+# MIGRATION: and registers market_data ORM models so autogenerate detects schema drift.
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

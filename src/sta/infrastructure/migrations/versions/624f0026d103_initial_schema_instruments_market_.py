@@ -14,6 +14,9 @@ from collections.abc import Sequence
 import sqlalchemy as sa
 from alembic import op
 
+# MIGRATION: initial schema — instruments, market_sessions, ticks hypertable.
+# PHASE_0: continuous aggregates (bars_1m/5m) deferred to a follow-up migration per ADR A3.
+
 # revision identifiers, used by Alembic.
 revision: str = "624f0026d103"
 down_revision: str | Sequence[str] | None = None

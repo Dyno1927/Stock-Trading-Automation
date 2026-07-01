@@ -14,6 +14,9 @@ from typing import Any
 
 from sta.config.settings import get_settings
 
+# CONFIG: structured JSON logging — log level read from app settings.
+# NOTE: _configured guard makes configure_logging() idempotent — safe to call
+# NOTE: from tests, lifespan hooks, and scripts without double-registering handlers.
 _configured = False
 
 

@@ -7,12 +7,13 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from sta.api.routes.market_data import router as market_data_router
 from sta.config.settings import get_settings
 from sta.infrastructure.database import dispose_engine, init_engine
 from sta.infrastructure.logging_config import configure_logging
 from sta.infrastructure.redis_client import dispose_redis, init_redis
 
-# API: FastAPI entrypoint. TODO: only GET /health exists so far.
+# API: FastAPI entrypoint. Routes: /health · /market/* (instruments, session, ticks, price, ws).
 
 
 @asynccontextmanager
@@ -28,6 +29,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(title="STA", lifespan=lifespan)
+
+app.include_router(market_data_router)
 
 
 @app.get("/health")
